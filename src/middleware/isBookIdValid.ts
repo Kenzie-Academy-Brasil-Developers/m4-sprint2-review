@@ -1,11 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import format from "pg-format";
-import { client } from "../database";
+import { dbQuery } from "../utils/dbQuery";
 
 export const isBookIdValid = async (req: Request, res: Response, next: NextFunction) => {
-    const query = format(`SELECT * FROM books WHERE id = %L;`, req.params.id);
-    
-    const data = await client.query(query);
+   
+    const data = await dbQuery(`SELECT * FROM books WHERE id = %L;`, [req.params.id]);
 
     if(!data.rows[0]){
         return res.status(404).json({ message: "Book not found."});
