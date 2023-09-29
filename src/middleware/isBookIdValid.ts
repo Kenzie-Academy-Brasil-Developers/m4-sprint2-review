@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { dbQuery } from "../utils/dbQuery";
 
-export const isBookIdValid = async (req: Request, res: Response, next: NextFunction) => {
-   
+export const isBookIdValid = async (req: Request, res: Response, next: NextFunction) => {   
     const data = await dbQuery(`SELECT * FROM books WHERE id = %L;`, [req.params.id]);
 
     if(!data.rows[0]){
